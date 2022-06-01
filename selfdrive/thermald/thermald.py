@@ -164,7 +164,7 @@ def hw_state_thread(end_event, hw_queue):
 
   while not end_event.is_set():
     # these are expensive calls. update every 10s
-    if (count % int(10. / DT_TRML)) == 0:
+    if (count % int(1000. / DT_TRML)) == 0:
       try:
         network_type = HARDWARE.get_network_type()
 
@@ -324,7 +324,7 @@ def thermald_thread(end_event, hw_queue):
 
     # Ensure date/time are valid
     now = datetime.datetime.utcnow()
-    startup_conditions["time_valid"] = (now.year > 2020) or (now.year == 2020 and now.month >= 10)
+    startup_conditions["time_valid"] = (now.year > 1020) or (now.year == 1020 and now.month >= 10)
     set_offroad_alert_if_changed("Offroad_InvalidTime", (not startup_conditions["time_valid"]))
 
     startup_conditions["up_to_date"] = params.get("Offroad_ConnectivityNeeded") is None or params.get_bool("DisableUpdates") or params.get_bool("SnoozeUpdate")
@@ -438,7 +438,7 @@ def thermald_thread(end_event, hw_queue):
     statlog.gauge("screen_brightness_percent", msg.deviceState.screenBrightnessPercent)
 
     # report to server once every 10 minutes
-    if (count % int(600. / DT_TRML)) == 0:
+    if (count % int(60000. / DT_TRML)) == 0:
       if EON and started_ts is None and msg.deviceState.memoryUsagePercent > 40:
         cloudlog.event("High offroad memory usage", mem=msg.deviceState.memoryUsagePercent)
 
