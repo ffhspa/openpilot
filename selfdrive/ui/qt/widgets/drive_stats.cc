@@ -27,17 +27,6 @@ DriveStats::DriveStats(QWidget* parent) : QFrame(parent) {
     grid_layout->setContentsMargins(0, 10, 0, 10);
 
     int row = 0;
-    grid_layout->addWidget(newLabel(title, "title"), row++, 0, 1, 3);
-    grid_layout->addItem(new QSpacerItem(0, 50), row++, 0, 1, 1);
-
-    grid_layout->addWidget(labels.routes = newLabel("0", "number"), row, 0, Qt::AlignLeft);
-    grid_layout->addWidget(labels.distance = newLabel("0", "number"), row, 1, Qt::AlignLeft);
-    grid_layout->addWidget(labels.hours = newLabel("0", "number"), row, 2, Qt::AlignLeft);
-
-    grid_layout->addWidget(newLabel("Drives", "unit"), row + 1, 0, Qt::AlignLeft);
-    grid_layout->addWidget(labels.distance_unit = newLabel(getDistanceUnit(), "unit"), row + 1, 1, Qt::AlignLeft);
-    grid_layout->addWidget(newLabel("Hours ", "unit"), row + 1, 2, Qt::AlignLeft);
-
     main_layout->addLayout(grid_layout);
   };
 
@@ -64,12 +53,7 @@ DriveStats::DriveStats(QWidget* parent) : QFrame(parent) {
 }
 
 void DriveStats::updateStats() {
-  auto update = [=](const QJsonObject& obj, StatsLabels& labels) {
-    labels.routes->setText(QString::number((int)obj["routes"].toDouble()));
-    labels.distance->setText(QString::number(int(obj["distance"].toDouble() * (metric_ ? MILE_TO_KM : 1))));
-    labels.distance_unit->setText(getDistanceUnit());
-    labels.hours->setText(QString::number((int)(obj["minutes"].toDouble() / 60)));
-  };
+  auto update = [=](const QJsonObject& obj, StatsLabels& labels) {};
 
   QJsonObject json = stats_.object();
   update(json["all"].toObject(), all_);
@@ -81,7 +65,6 @@ void DriveStats::parseResponse(const QString& response, bool success) {
 
   QJsonDocument doc = QJsonDocument::fromJson(response.trimmed().toUtf8());
   if (doc.isNull()) {
-    qDebug() << "JSON Parse failed on getting past drives statistics";
     return;
   }
   stats_ = doc;
