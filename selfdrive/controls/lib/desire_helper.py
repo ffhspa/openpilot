@@ -1,6 +1,7 @@
 from cereal import log
 from common.realtime import DT_MDL
 from selfdrive.config import Conversions as CV
+from common.params import Params
 
 LaneChangeState = log.LateralPlan.LaneChangeState
 LaneChangeDirection = log.LateralPlan.LaneChangeDirection
@@ -64,8 +65,8 @@ class DesireHelper:
                          ((carstate.steeringTorque > 0 and self.lane_change_direction == LaneChangeDirection.left) or
                           (carstate.steeringTorque < 0 and self.lane_change_direction == LaneChangeDirection.right))
         if Params().get_bool('NudgelessALC'):
-          if v_ego >= 50.0 * CV.MPH_TO_MS:
-            torque_applied = True
+         if v_ego >= 50.0 * CV.MPH_TO_MS:
+          torque_applied = True
 
         blindspot_detected = ((carstate.leftBlindspot and self.lane_change_direction == LaneChangeDirection.left) or
                               (carstate.rightBlindspot and self.lane_change_direction == LaneChangeDirection.right))
