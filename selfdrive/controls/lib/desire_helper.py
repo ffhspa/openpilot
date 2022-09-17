@@ -5,7 +5,7 @@ from selfdrive.config import Conversions as CV
 LaneChangeState = log.LateralPlan.LaneChangeState
 LaneChangeDirection = log.LateralPlan.LaneChangeDirection
 
-LANE_CHANGE_SPEED_MIN = 50 * CV.MPH_TO_MS
+LANE_CHANGE_SPEED_MIN = 44 * CV.MPH_TO_MS
 LANE_CHANGE_TIME_MAX = 10.
 
 DESIRES = {
