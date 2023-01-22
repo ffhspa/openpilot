@@ -112,6 +112,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 4096], [0, 4096]]  # TODO: determine if there is a dead zone at the top end
       tire_stiffness_factor = 1.
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.8], [0.24]]
+      ret.minEnableSpeed = 12 * CV.MPH_TO_MS
 
     elif candidate in (CAR.ACCORD, CAR.ACCORDH):
       stop_and_go = True
